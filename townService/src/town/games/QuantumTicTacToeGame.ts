@@ -101,6 +101,49 @@ export default class QuantumTicTacToeGame extends Game<
 
   protected _leave(player: Player): void {
     // TODO: implement me
+    if (this.state.x !== player.id && this.state.o !== player.id) {
+      throw new InvalidParametersError(PLAYER_NOT_IN_GAME_MESSAGE);
+    }
+    // Handles case where the game has not started yet
+    if (this.state.o === undefined) {
+      this.state = {
+        moves: [],
+        xScore: 0,
+        oScore: 0,
+        publiclyVisible: {
+          A: Array(3)
+            .fill(null)
+            .map(() => Array(3).fill(false)), // I looked up how to fill an array
+          B: Array(3)
+            .fill(null)
+            .map(() => Array(3).fill(false)),
+          C: Array(3)
+            .fill(null)
+            .map(() => Array(3).fill(false)),
+        },
+        status: 'WAITING_TO_START',
+      };
+      return;
+    }
+    if (this.state.x === player.id) {
+      this.state = {
+        ...this.state,
+        status: 'OVER',
+        winner: this.state.o,
+      };
+      this._games.A.state.status = 'OVER';
+      this._games.B.state.status = 'OVER';
+      this._games.C.state.status = 'OVER';
+    } else {
+      this.state = {
+        ...this.state,
+        status: 'OVER',
+        winner: this.state.x,
+      };
+      this._games.A.state.status = 'OVER';
+      this._games.B.state.status = 'OVER';
+      this._games.C.state.status = 'OVER';
+    }
   }
 
   /**
