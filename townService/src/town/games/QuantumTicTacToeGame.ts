@@ -102,6 +102,19 @@ export default class QuantumTicTacToeGame extends Game<
    */
   private _validateMove(move: GameMove<QuantumTicTacToeMove>): void {
     // TODO: implement me
+    for (const m of this.state.moves) {
+      if (m.col === move.move.col && m.row === move.move.row) {
+        throw new InvalidParametersError(BOARD_POSITION_NOT_EMPTY_MESSAGE);
+      }
+    }
+    if (move.move.gamePiece === 'X' && this.state.moves.length % 2 === 1) {
+      throw new InvalidParametersError(MOVE_NOT_YOUR_TURN_MESSAGE);
+    } else if (move.move.gamePiece === 'O' && this.state.moves.length % 2 === 0) {
+      throw new InvalidParametersError(MOVE_NOT_YOUR_TURN_MESSAGE);
+    }
+    if (this.state.status !== 'IN_PROGRESS') {
+      throw new InvalidParametersError(GAME_NOT_IN_PROGRESS_MESSAGE);
+    }
   }
 
   public applyMove(move: GameMove<QuantumTicTacToeMove>): void {
