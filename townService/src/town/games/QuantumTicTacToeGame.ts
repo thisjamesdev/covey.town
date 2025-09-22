@@ -209,6 +209,47 @@ export default class QuantumTicTacToeGame extends Game<
    */
   private _checkForWins(): void {
     // TODO: implement me
+    for (const letter of ['A', 'B', 'C'] as const) {
+      const board = (this._games[letter] as any)._board as string[][];
+
+      for (let i = 0; i < 3; i++) {
+        // Check for 3 in a row or column
+        if (board[i][0] !== '' && board[i][0] === board[i][1] && board[i][0] === board[i][2]) {
+          this.state = {
+            ...this.state,
+            status: 'OVER',
+            winner: board[i][0] === 'X' ? this.state.x : this.state.o,
+          };
+          return;
+        }
+        if (board[0][i] !== '' && board[0][i] === board[1][i] && board[0][i] === board[2][i]) {
+          this.state = {
+            ...this.state,
+            status: 'OVER',
+            winner: board[0][i] === 'X' ? this.state.x : this.state.o,
+          };
+          return;
+        }
+      }
+      // Check for 3 in a diagonal
+      if (board[0][0] !== '' && board[0][0] === board[1][1] && board[0][0] === board[2][2]) {
+        this.state = {
+          ...this.state,
+          status: 'OVER',
+          winner: board[0][0] === 'X' ? this.state.x : this.state.o,
+        };
+        return;
+      }
+      // Check for 3 in the other diagonal
+      if (board[0][2] !== '' && board[0][2] === board[1][1] && board[0][2] === board[2][0]) {
+        this.state = {
+          ...this.state,
+          status: 'OVER',
+          winner: board[0][2] === 'X' ? this.state.x : this.state.o,
+        };
+        return;
+      }
+    }
   }
 
   /**
