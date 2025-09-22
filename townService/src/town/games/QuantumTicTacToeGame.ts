@@ -258,5 +258,13 @@ export default class QuantumTicTacToeGame extends Game<
    */
   private _checkForGameEnding(): void {
     // TODO: implement me
+    // Check for no more moves
+    if (this.state.moves.length === 9) {
+      this.state = {
+        ...this.state,
+        status: 'OVER',
+        winner: undefined,
+      };
+    }
   }
 }
