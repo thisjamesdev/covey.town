@@ -121,6 +121,32 @@ export default class QuantumTicTacToeGame extends Game<
     this._validateMove(move);
 
     // TODO: implement the guts of this method
+    let gamePiece: 'X' | 'O';
+    if (move.playerID === this.state.x) {
+      gamePiece = 'X';
+    } else {
+      gamePiece = 'O';
+    }
+    const ticTacMove = {
+      playerID: move.playerID,
+      gameID: move.gameID,
+      move: {
+        gamePiece,
+        row: move.move.row,
+        col: move.move.col,
+      },
+    };
+    this._games[move.move.board].applyMove(ticTacMove);
+    this.state = {
+      ...this.state,
+      moves: [
+        ...this.state.moves,
+        {
+          ...move.move,
+          board: move.move.board,
+        },
+      ],
+    };
 
     this._checkForWins();
     this._checkForGameEnding();
