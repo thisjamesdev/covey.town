@@ -58,6 +58,37 @@ export default class QuantumTicTacToeGame extends Game<
 
   protected _join(player: Player): void {
     // TODO: implement me
+    if (this.state.x === player.id || this.state.o === player.id) {
+      throw new InvalidParametersError(PLAYER_ALREADY_IN_GAME_MESSAGE);
+    }
+    if (!this.state.x) {
+      this.state = {
+        ...this.state,
+        x: player.id,
+      };
+      this._games.A.state.x = player.id;
+      this._games.B.state.x = player.id;
+      this._games.C.state.x = player.id;
+    } else if (!this.state.o) {
+      this.state = {
+        ...this.state,
+        o: player.id,
+      };
+      this._games.A.state.o = player.id;
+      this._games.B.state.o = player.id;
+      this._games.C.state.o = player.id;
+    } else {
+      throw new InvalidParametersError(GAME_FULL_MESSAGE);
+    }
+    if (this.state.x && this.state.o) {
+      this.state = {
+        ...this.state,
+        status: 'IN_PROGRESS',
+      };
+      this._games.A.state.status = 'IN_PROGRESS';
+      this._games.B.state.status = 'IN_PROGRESS';
+      this._games.C.state.status = 'IN_PROGRESS';
+    }
   }
 
   protected _leave(player: Player): void {
