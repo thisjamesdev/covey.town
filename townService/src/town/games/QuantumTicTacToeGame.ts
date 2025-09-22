@@ -26,6 +26,34 @@ export default class QuantumTicTacToeGame extends Game<
 
   public constructor() {
     // TODO: implement me
+    super({
+      moves: [],
+      x: undefined,
+      o: undefined,
+      xScore: 0,
+      oScore: 0,
+      publiclyVisible: {
+        A: Array(3)
+          .fill(null)
+          .map(() => Array(3).fill(false)), // I looked up how to fill an array
+        B: Array(3)
+          .fill(null)
+          .map(() => Array(3).fill(false)),
+        C: Array(3)
+          .fill(null)
+          .map(() => Array(3).fill(false)),
+      },
+      status: 'WAITING_TO_START',
+    });
+
+    this._games = {
+      A: new TicTacToeGame(),
+      B: new TicTacToeGame(),
+      C: new TicTacToeGame(),
+    };
+    this._xScore = this.state.xScore;
+    this._oScore = this.state.oScore;
+    this._moveCount = this.state.moves.length;
   }
 
   protected _join(player: Player): void {
